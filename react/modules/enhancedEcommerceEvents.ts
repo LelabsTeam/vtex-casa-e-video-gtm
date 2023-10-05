@@ -120,7 +120,7 @@ export async function sendEnhancedEcommerceEvents(e: PixelMessage) {
       }
 
       const data = {
-        event: 'productClick',
+        event: 'select_item',
         ecommerce: {
           click: {
             ...list,
@@ -143,8 +143,7 @@ export async function sendEnhancedEcommerceEvents(e: PixelMessage) {
       }
 
       selectItem(e.data)
-      updateEcommerce('productClick', data)
-
+      updateEcommerce('select_item', data)
       return
     }
 
@@ -255,7 +254,7 @@ export async function sendEnhancedEcommerceEvents(e: PixelMessage) {
       )
 
       const data = {
-        event: 'productImpression',
+        event: 'view_item_list',
         ecommerce: {
           currencyCode: currency,
           impressions: parsedImpressions,
@@ -263,7 +262,7 @@ export async function sendEnhancedEcommerceEvents(e: PixelMessage) {
       }
 
       viewItemList(e.data)
-      updateEcommerce('productImpression', data)
+      updateEcommerce('view_item_list', data)
 
       return
     }
