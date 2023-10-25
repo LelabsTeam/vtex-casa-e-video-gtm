@@ -336,7 +336,7 @@ export function addToWishlist(eventData: AddToWishlistData) {
   const { currency, items, list } = eventData
 
   const { product } = items
-
+  
   const {
     sku,
     productName,
@@ -345,10 +345,12 @@ export function addToWishlist(eventData: AddToWishlistData) {
     brand,
     productReference,
   } = product
+  const [itemSku] = product.items
+  const selectedSeller = sku || itemSku
+  const variant = selectedSeller.itemId;
 
-  const { itemId: variant } = sku
 
-  const seller = getSeller(sku.sellers)
+  const seller = getSeller(selectedSeller.sellers)
   const value = getPrice(seller)
   const categoriesHierarchy = getCategoriesWithHierarchy(categories)
   const discount = getDiscount(seller)
@@ -366,8 +368,8 @@ export function addToWishlist(eventData: AddToWishlistData) {
     ...categoriesHierarchy,
     ...customDimensions({
       productReference,
-      skuReference: sku.referenceId.Value,
-      skuName: sku.name,
+      skuReference: selectedSeller.referenceId.Value,
+      skuName: selectedSeller.name,
       quantity,
     }),
   }
@@ -377,7 +379,6 @@ export function addToWishlist(eventData: AddToWishlistData) {
     value,
     items: [item],
   }
-
   updateEcommerce(eventName, { ecommerce: data })
 }
 
